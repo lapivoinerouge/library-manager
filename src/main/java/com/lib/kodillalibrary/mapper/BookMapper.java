@@ -15,14 +15,16 @@ public class BookMapper {
         return new Book(
                 bookDto.getId(),
                 bookDto.getTitleId(),
-                bookDto.getStatus());
+                bookDto.getStatus(),
+                bookDto.getLendStatus());
     }
 
     public BookDto mapToBookDto(final Book book) {
         return new BookDto(
                 book.getId(),
                 book.getTitleId(),
-                book.getStatus());
+                book.getStatus(),
+                book.getLendStatus());
     }
 
     public List<BookDto> mapToBookDtoList(final List<Book> books) {

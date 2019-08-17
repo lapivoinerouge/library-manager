@@ -1,10 +1,12 @@
 package com.lib.kodillalibrary.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -23,5 +25,14 @@ public class BookTitle {
 
     @Column(name = "year")
     private Long year;
+
+    @OneToMany(
+            targetEntity = Book.class,
+            mappedBy = "bookTitle",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
+    )
+    @JsonManagedReference
+    private List<Book> books;
 
 }

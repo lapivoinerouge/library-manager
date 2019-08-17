@@ -1,5 +1,7 @@
 package com.lib.kodillalibrary.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,15 +18,21 @@ public class LendStatus {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "book_id")
+    @OneToOne
+    @JoinColumn(name = "book_id")
+    @JsonBackReference
     private Long bookId;
 
-    @Column(name = "reader_id")
+    @ManyToOne
+    @JoinColumn(name = "reader_id")
+    @JsonBackReference
     private Long readerId;
 
     @Column(name = "lend_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate lendDate;
 
     @Column(name = "return_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate returnDate;
 }

@@ -12,7 +12,7 @@ public class ReaderMapper {
 
     public Reader mapToReader(final ReaderDto readerDto) {
         return new Reader(
-               readerDto.getId(),
+                readerDto.getId(),
                 readerDto.getFirstname(),
                 readerDto.getLastname(),
                 readerDto.getSignUpDate());
