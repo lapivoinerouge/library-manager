@@ -1,12 +1,11 @@
 package com.lib.kodillalibrary.controller;
 
+import com.lib.kodillalibrary.controller.exceptions.ReaderNotFoundException;
 import com.lib.kodillalibrary.domain.ReaderDto;
 import com.lib.kodillalibrary.mapper.ReaderMapper;
 import com.lib.kodillalibrary.service.ReaderDbService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,22 +25,22 @@ public class ReaderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getReader")
-    public ReaderDto getReader(Long readerId) {
-        return new ReaderDto(1L, "name", "lastname", LocalDate.of(1999, 12,01));
+    public ReaderDto getReader(@RequestParam Long readerId) throws ReaderNotFoundException {
+        return readerMapper.mapToReaderDto(readerDbService.getReader(readerId).orElseThrow(ReaderNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteReader")
-    public void deleteReader(Long readerId) {
-
+    public void deleteReader(@RequestParam Long readerId) {
+        readerDbService.deleteReader(readerId);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "editReader")
-    public ReaderDto editReader(ReaderDto readerDto) {
-        return new ReaderDto(1L, "name2", "lastname2", LocalDate.of(1999, 02, 02));
+    public ReaderDto editReader(@RequestBody ReaderDto readerDto) {
+        return readerMapper.mapToReaderDto(readerDbService.saveReader(readerMapper.mapToReader(readerDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addReader")
-    public void addReader(ReaderDto readerDto) {
-
+    public void addReader(@RequestBody ReaderDto readerDto) {
+        readerDbService.saveReader(readerMapper.mapToReader(readerDto));
     }
 }

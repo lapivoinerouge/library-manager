@@ -1,12 +1,11 @@
 package com.lib.kodillalibrary.controller;
 
+import com.lib.kodillalibrary.controller.exceptions.BookNotFoundException;
 import com.lib.kodillalibrary.domain.BookDto;
 import com.lib.kodillalibrary.mapper.BookMapper;
 import com.lib.kodillalibrary.service.BookDbService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,23 +24,24 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBook")
-    public BookDto getBook(Long bookId) {
-        return new BookDto(1L, 1L, "lost");
+    public BookDto getBook(@RequestParam Long bookId) throws BookNotFoundException {
+        return bookMapper.mapToBookDto(bookDbService.getBook(bookId).orElseThrow(BookNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteBook")
-    public void deleteBook(Long bookId) {
-
+    public void deleteBook(@RequestParam Long bookId) {
+        bookDbService.deleteBook(bookId);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "editBook")
-    public BookDto editBook(BookDto bookDto) {
-        return new BookDto(1L, 1L, "damaged");
+    public BookDto editBook(@RequestBody BookDto bookDto) {
+
+        return bookMapper.mapToBookDto(bookDbService.saveBook(bookMapper.mapToBook(bookDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addBook")
-    public void addBook(BookDto bookDto) {
-
+    public void addBook(@RequestBody BookDto bookDto) {
+        bookDbService.saveBook(bookMapper.mapToBook(bookDto));
     }
 
 }

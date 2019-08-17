@@ -1,12 +1,11 @@
 package com.lib.kodillalibrary.controller;
 
+import com.lib.kodillalibrary.controller.exceptions.TitleNotFoundException;
 import com.lib.kodillalibrary.domain.BookTitleDto;
 import com.lib.kodillalibrary.mapper.TitleMapper;
 import com.lib.kodillalibrary.service.TitleDbService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,23 +24,23 @@ public class TitleController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTitle")
-    public BookTitleDto getTitle(Long titleId) {
-        return new BookTitleDto(1L, "Black Panther", "Jon Don", 1994L);
+    public BookTitleDto getTitle(@RequestParam Long titleId) throws TitleNotFoundException {
+        return titleMapper.mapToTitleDto(titleDbService.getTitle(titleId).orElseThrow(TitleNotFoundException::new));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTitle")
-    public void deleteTitle(Long titleId) {
-
+    public void deleteTitle(@RequestParam Long titleId) {
+        titleDbService.deleteTitle(titleId);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "editTitle")
-    public BookTitleDto editTitle(BookTitleDto bookTitleDto) {
-        return new BookTitleDto(1L, "Pink Panther", "Jon Jon", 2004L);
+    public BookTitleDto editTitle(@RequestBody BookTitleDto bookTitleDto) {
+        return titleMapper.mapToTitleDto(titleDbService.saveTitle(titleMapper.mapToTitle(bookTitleDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addTitle")
-    public void addTitle(BookTitleDto bookTitleDto) {
-
+    public void addTitle(@RequestBody BookTitleDto bookTitleDto) {
+        titleDbService.saveTitle(titleMapper.mapToTitle(bookTitleDto));
     }
 
 
