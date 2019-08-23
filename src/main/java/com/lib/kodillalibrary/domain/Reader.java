@@ -37,5 +37,4 @@ public class Reader {
     )
     @JsonManagedReference
     private List<LendStatus> lendBooks;
-
 }

@@ -29,5 +29,4 @@ public class BookDbService {
     public void deleteBook(final Long id) {
         repository.deleteById(id);
     }
-
 }
