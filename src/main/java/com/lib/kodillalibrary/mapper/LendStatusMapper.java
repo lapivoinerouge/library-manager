@@ -34,4 +34,10 @@ public class LendStatusMapper {
                 .collect(Collectors.toList());
     }
 
+    public List<LendStatus> mapToLendStatusList(final List<LendStatusDto> lendStatusDtos) {
+        return lendStatusDtos.stream()
+                .map(l -> new LendStatus(l.getId(), l.getBookId(), l.getReaderId(), l.getLendDate(), l.getReturnDate()))
+                .collect(Collectors.toList());
+    }
+
 }

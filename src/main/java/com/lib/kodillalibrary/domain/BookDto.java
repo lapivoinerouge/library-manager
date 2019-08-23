@@ -11,5 +11,5 @@ public class BookDto {
     private Long id;
     private Long titleId;
     private String status;
-    private LendStatus lendStatus;
+    private LendStatusDto lendStatusDto;
 }
