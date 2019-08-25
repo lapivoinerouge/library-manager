@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookDto {
     private Long id;
-    private Long titleId;
+    private BookTitleDto bookTitle;
     private String status;
-    private LendStatusDto lendStatusDto;
 }

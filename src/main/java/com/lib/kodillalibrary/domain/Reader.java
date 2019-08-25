@@ -7,34 +7,49 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
 @NoArgsConstructor
-@Entity(name="readers")
+@Entity(name = "readers")
 public class Reader {
+
+    public Reader(Long id, String firstname, String lastname, LocalDate signUpDate) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.signUpDate = signUpDate;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @NotNull
     private Long id;
 
     @Column(name = "firstname")
+    @NotNull
     private String firstname;
 
     @Column(name = "lastname")
+    @NotNull
     private String lastname;
 
     @Column(name = "signup_date")
+    @NotNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate signUpDate;
 
+
     @OneToMany(
             targetEntity = LendStatus.class,
-            mappedBy = "reader",
+            mappedBy = "readerId",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     @JsonManagedReference
-    private List<LendStatus> lendBooks;
+    private List<LendStatus> lendBooks = new ArrayList<>();
 }

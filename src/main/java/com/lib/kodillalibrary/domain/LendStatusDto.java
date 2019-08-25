@@ -11,8 +11,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class LendStatusDto {
     private Long id;
-    private Long bookId;
-    private Long readerId;
+    private BookDto bookId;
+    private ReaderDto readerId;
     private LocalDate lendDate;
     private LocalDate returnDate;
 }

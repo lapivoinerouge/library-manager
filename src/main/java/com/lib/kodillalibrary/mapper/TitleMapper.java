@@ -19,8 +19,8 @@ public class TitleMapper {
                 titleDto.getId(),
                 titleDto.getTitle(),
                 titleDto.getAuthor(),
-                titleDto.getYear(),
-                bookMapper.mapToBookList(titleDto.getBookDtos()));
+                titleDto.getYear());
+//                bookMapper.mapToBookList(titleDto.getBooks()));
     }
 
     public BookTitleDto mapToTitleDto(final BookTitle title) {
@@ -28,13 +28,19 @@ public class TitleMapper {
                 title.getId(),
                 title.getTitle(),
                 title.getAuthor(),
-                title.getYear(),
-                bookMapper.mapToBookDtoList(title.getBooks()));
+                title.getYear());
+//                bookMapper.mapToBookDtoList(title.getBooks()));
     }
 
     public List<BookTitleDto> mapToTitleDtoList(final List<BookTitle> titleList) {
         return titleList.stream()
-                .map(t -> new BookTitleDto(t.getId(), t.getTitle(), t.getAuthor(), t.getYear(), bookMapper.mapToBookDtoList(t.getBooks())))
+                .map(t -> new BookTitleDto(t.getId(), t.getTitle(), t.getAuthor(), t.getYear()))
                 .collect(Collectors.toList());
     }
+
+//    public List<BookTitleDto> mapToTitleDtoList(final List<BookTitle> titleList) {
+//        return titleList.stream()
+//                .map(t -> new BookTitleDto(t.getId(), t.getTitle(), t.getAuthor(), t.getYear(), bookMapper.mapToBookDtoList(t.getBooks())))
+//                .collect(Collectors.toList());
+//    }
 }

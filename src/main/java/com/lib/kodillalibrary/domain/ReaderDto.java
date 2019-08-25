@@ -15,6 +15,12 @@ public class ReaderDto {
     private String firstname;
     private String lastname;
     private LocalDate signUpDate;
-    private List<LendStatusDto> lendStatusDtos;
+    private List<LendStatusDto> lendBooks;
 
+    public ReaderDto(Long id, String firstname, String lastname, LocalDate signUpDate) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.signUpDate = signUpDate;
+    }
 }

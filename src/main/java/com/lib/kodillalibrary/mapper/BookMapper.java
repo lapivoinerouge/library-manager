@@ -8,38 +8,35 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Component
 public class BookMapper {
 
     @Autowired
-    private LendStatusMapper lendStatusMapper;
+    private TitleMapper titleMapper;
 
     public Book mapToBook(final BookDto bookDto) {
         return new Book(
                 bookDto.getId(),
-                bookDto.getTitleId(),
-                bookDto.getStatus(),
-                lendStatusMapper.mapToLendStatus(bookDto.getLendStatusDto()));
+                titleMapper.mapToTitle(bookDto.getBookTitle()),
+                bookDto.getStatus());
     }
 
     public BookDto mapToBookDto(final Book book) {
         return new BookDto(
                 book.getId(),
-                book.getTitleId(),
-                book.getStatus(),
-                lendStatusMapper.mapToLendStatusDto(book.getLendStatus()));
+                titleMapper.mapToTitleDto(book.getBookTitle()),
+                book.getStatus());
     }
 
     public List<BookDto> mapToBookDtoList(final List<Book> books) {
         return books.stream()
-                .map(b -> new BookDto(b.getId(), b.getTitleId(), b.getStatus(), lendStatusMapper.mapToLendStatusDto(b.getLendStatus())))
+                .map(b -> new BookDto(b.getId(), titleMapper.mapToTitleDto(b.getBookTitle()), b.getStatus()))
                 .collect(Collectors.toList());
     }
 
     public List<Book> mapToBookList(final List<BookDto> bookDtoList) {
         return bookDtoList.stream()
-                .map(b -> new Book(b.getId(), b.getTitleId(), b.getStatus(), lendStatusMapper.mapToLendStatus(b.getLendStatusDto())))
+                .map(b -> new Book(b.getId(), titleMapper.mapToTitle(b.getBookTitle()), b.getStatus()))
                 .collect(Collectors.toList());
     }
 }

@@ -19,8 +19,7 @@ public class ReaderMapper {
                 readerDto.getId(),
                 readerDto.getFirstname(),
                 readerDto.getLastname(),
-                readerDto.getSignUpDate(),
-                mapper.mapToLendStatusList(readerDto.getLendStatusDtos()));
+                readerDto.getSignUpDate());
     }
 
     public ReaderDto mapToReaderDto(final Reader reader) {
@@ -28,8 +27,7 @@ public class ReaderMapper {
                 reader.getId(),
                 reader.getFirstname(),
                 reader.getLastname(),
-                reader.getSignUpDate(),
-                mapper.mapToLendStatusDtoList(reader.getLendBooks()));
+                reader.getSignUpDate());
     }
 
     public List<ReaderDto> mapToReaderDtoList(final List<Reader> readerList) {

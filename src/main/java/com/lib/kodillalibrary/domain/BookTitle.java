@@ -1,20 +1,32 @@
 package com.lib.kodillalibrary.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "titles")
 public class BookTitle {
+
+    public BookTitle(Long id, String title, String author, Long year) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.year = year;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    @NotNull
     private Long id;
 
     @Column(name = "title")
@@ -26,13 +38,13 @@ public class BookTitle {
     @Column(name = "year")
     private Long year;
 
+    @JsonBackReference
     @OneToMany(
             targetEntity = Book.class,
             mappedBy = "bookTitle",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER
+            fetch = FetchType.LAZY
     )
-    @JsonManagedReference
-    private List<Book> books;
+    private List<Book> books = new ArrayList<>();
 
 }
