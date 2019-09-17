@@ -1,7 +1,11 @@
 package com.lib.kodillalibrary.mapper;
 
+import com.lib.kodillalibrary.domain.Book;
 import com.lib.kodillalibrary.domain.LendStatus;
 import com.lib.kodillalibrary.domain.LendStatusDto;
+import com.lib.kodillalibrary.domain.Reader;
+import com.lib.kodillalibrary.service.BookDbService;
+import com.lib.kodillalibrary.service.ReaderDbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,16 +16,16 @@ import java.util.stream.Collectors;
 public class LendStatusMapper {
 
     @Autowired
-    BookMapper bookMapper;
+    BookDbService bookDbService;
 
     @Autowired
-    ReaderMapper readerMapper;
+    ReaderDbService readerDbService;
 
     public LendStatus mapToLendStatus(final LendStatusDto lendStatusDto) {
         return new LendStatus(
                 lendStatusDto.getId(),
-                bookMapper.mapToBook(lendStatusDto.getBookId()),
-                readerMapper.mapToReader(lendStatusDto.getReaderId()),
+                bookDbService.getBook(lendStatusDto.getBookId()).orElse(new Book()),
+                readerDbService.getReader(lendStatusDto.getReaderId()).orElse(new Reader()),
                 lendStatusDto.getLendDate(),
                 lendStatusDto.getReturnDate());
     }
@@ -29,22 +33,22 @@ public class LendStatusMapper {
     public LendStatusDto mapToLendStatusDto(final LendStatus lendStatus) {
         return new LendStatusDto(
                 lendStatus.getId(),
-                bookMapper.mapToBookDto(lendStatus.getBookId()),
-                readerMapper.mapToReaderDto(lendStatus.getReaderId()),
+                lendStatus.getBookId().getId(),
+                lendStatus.getReaderId().getId(),
                 lendStatus.getLendDate(),
                 lendStatus.getReturnDate());
     }
 
     public List<LendStatusDto> mapToLendStatusDtoList(final List<LendStatus> lendStatusList) {
         return lendStatusList.stream()
-                .map(l -> new LendStatusDto(l.getId(), bookMapper.mapToBookDto(l.getBookId()), readerMapper.mapToReaderDto(l.getReaderId()),l.getLendDate(),l.getReturnDate()))
+                .map(l -> new LendStatusDto(l.getId(), l.getBookId().getId(), l.getReaderId().getId(),l.getLendDate(),l.getReturnDate()))
                 .collect(Collectors.toList());
     }
 
-    public List<LendStatus> mapToLendStatusList(final List<LendStatusDto> lendStatusDtos) {
-        return lendStatusDtos.stream()
-                .map(l -> new LendStatus(l.getId(), bookMapper.mapToBook(l.getBookId()), readerMapper.mapToReader(l.getReaderId()), l.getLendDate(), l.getReturnDate()))
-                .collect(Collectors.toList());
-    }
+//    public List<LendStatus> mapToLendStatusList(final List<LendStatusDto> lendStatusDtos) {
+//        return lendStatusDtos.stream()
+//                .map(l -> new LendStatus(l.getId(), bookMapper.mapToBook(l.getBookId()), readerMapper.mapToReader(l.getReaderId()), l.getLendDate(), l.getReturnDate()))
+//                .collect(Collectors.toList());
+//    }
 
 }

@@ -32,7 +32,7 @@ public class ReaderMapper {
 
     public List<ReaderDto> mapToReaderDtoList(final List<Reader> readerList) {
         return readerList.stream()
-                .map(r -> new ReaderDto(r.getId(), r.getFirstname(), r.getLastname(), r.getSignUpDate(), mapper.mapToLendStatusDtoList(r.getLendBooks())))
+                .map(r -> new ReaderDto(r.getId(), r.getFirstname(), r.getLastname(), r.getSignUpDate()))
                 .collect(Collectors.toList());
     }
 

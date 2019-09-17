@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -15,12 +14,5 @@ public class ReaderDto {
     private String firstname;
     private String lastname;
     private LocalDate signUpDate;
-    private List<LendStatusDto> lendBooks;
-
-    public ReaderDto(Long id, String firstname, String lastname, LocalDate signUpDate) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.signUpDate = signUpDate;
-    }
+//    private List<LendStatusDto> lendBooks;
 }

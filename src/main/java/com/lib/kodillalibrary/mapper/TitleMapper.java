@@ -11,16 +11,12 @@ import java.util.stream.Collectors;
 @Component
 public class TitleMapper {
 
-    @Autowired
-    private BookMapper bookMapper;
-
     public BookTitle mapToTitle(final BookTitleDto titleDto) {
         return new BookTitle(
                 titleDto.getId(),
                 titleDto.getTitle(),
                 titleDto.getAuthor(),
                 titleDto.getYear());
-//                bookMapper.mapToBookList(titleDto.getBooks()));
     }
 
     public BookTitleDto mapToTitleDto(final BookTitle title) {
@@ -29,7 +25,6 @@ public class TitleMapper {
                 title.getTitle(),
                 title.getAuthor(),
                 title.getYear());
-//                bookMapper.mapToBookDtoList(title.getBooks()));
     }
 
     public List<BookTitleDto> mapToTitleDtoList(final List<BookTitle> titleList) {

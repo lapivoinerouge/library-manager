@@ -1,6 +1,6 @@
 package com.lib.kodillalibrary.controller;
 
-import com.lib.kodillalibrary.controller.exceptions.TitleNotFoundException;
+import com.lib.kodillalibrary.controller.exceptions.NotFoundException;
 import com.lib.kodillalibrary.domain.BookTitleDto;
 import com.lib.kodillalibrary.mapper.TitleMapper;
 import com.lib.kodillalibrary.service.TitleDbService;
@@ -24,8 +24,8 @@ public class TitleController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getTitle")
-    public BookTitleDto getTitle(@RequestParam Long titleId) throws TitleNotFoundException {
-        return titleMapper.mapToTitleDto(titleDbService.getTitle(titleId).orElseThrow(TitleNotFoundException::new));
+    public BookTitleDto getTitle(@RequestParam Long titleId) throws NotFoundException {
+        return titleMapper.mapToTitleDto(titleDbService.getTitle(titleId).orElseThrow(()-> new NotFoundException(titleId)));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTitle")

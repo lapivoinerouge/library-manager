@@ -1,6 +1,6 @@
 package com.lib.kodillalibrary.controller;
 
-import com.lib.kodillalibrary.controller.exceptions.BookNotFoundException;
+import com.lib.kodillalibrary.controller.exceptions.NotFoundException;
 import com.lib.kodillalibrary.domain.BookDto;
 import com.lib.kodillalibrary.mapper.BookMapper;
 import com.lib.kodillalibrary.service.BookDbService;
@@ -24,8 +24,8 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getBook")
-    public BookDto getBook(@RequestParam Long bookId) throws BookNotFoundException {
-        return bookMapper.mapToBookDto(bookDbService.getBook(bookId).orElseThrow(BookNotFoundException::new));
+    public BookDto getBook(@RequestParam Long bookId) throws NotFoundException {
+        return bookMapper.mapToBookDto(bookDbService.getBook(bookId).orElseThrow(()-> new NotFoundException(bookId)));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteBook")

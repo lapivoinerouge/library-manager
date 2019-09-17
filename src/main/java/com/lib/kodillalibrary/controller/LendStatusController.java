@@ -1,6 +1,6 @@
 package com.lib.kodillalibrary.controller;
 
-import com.lib.kodillalibrary.controller.exceptions.LendStatusNotFoundException;
+import com.lib.kodillalibrary.controller.exceptions.NotFoundException;
 import com.lib.kodillalibrary.domain.LendStatusDto;
 import com.lib.kodillalibrary.mapper.LendStatusMapper;
 import com.lib.kodillalibrary.service.LendStatusDbService;
@@ -24,8 +24,8 @@ public class LendStatusController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getStatus")
-    public LendStatusDto getStatus(@RequestParam Long statusId) throws LendStatusNotFoundException {
-        return lendStatusMapper.mapToLendStatusDto(lendStatusDbService.getStatus(statusId).orElseThrow(LendStatusNotFoundException::new));
+    public LendStatusDto getStatus(@RequestParam Long statusId) throws NotFoundException {
+        return lendStatusMapper.mapToLendStatusDto(lendStatusDbService.getStatus(statusId).orElseThrow(()-> new NotFoundException(statusId)));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteStatus")

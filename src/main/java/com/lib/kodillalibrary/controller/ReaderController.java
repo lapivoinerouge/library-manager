@@ -1,6 +1,6 @@
 package com.lib.kodillalibrary.controller;
 
-import com.lib.kodillalibrary.controller.exceptions.ReaderNotFoundException;
+import com.lib.kodillalibrary.controller.exceptions.NotFoundException;
 import com.lib.kodillalibrary.domain.ReaderDto;
 import com.lib.kodillalibrary.mapper.ReaderMapper;
 import com.lib.kodillalibrary.service.ReaderDbService;
@@ -24,8 +24,8 @@ public class ReaderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getReader")
-    public ReaderDto getReader(@RequestParam Long readerId) throws ReaderNotFoundException {
-        return readerMapper.mapToReaderDto(readerDbService.getReader(readerId).orElseThrow(ReaderNotFoundException::new));
+    public ReaderDto getReader(@RequestParam Long readerId) throws NotFoundException {
+        return readerMapper.mapToReaderDto(readerDbService.getReader(readerId).orElseThrow(()-> new NotFoundException(readerId)));
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteReader")
