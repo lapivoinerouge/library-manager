@@ -29,6 +29,4 @@ public class LendStatusDbService {
     public void deleteStatus(final Long id) {
         repository.deleteById(id);
     }
-
-
 }

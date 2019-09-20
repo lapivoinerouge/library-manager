@@ -14,5 +14,4 @@ public class ReaderDto {
     private String firstname;
     private String lastname;
     private LocalDate signUpDate;
-//    private List<LendStatusDto> lendBooks;
 }

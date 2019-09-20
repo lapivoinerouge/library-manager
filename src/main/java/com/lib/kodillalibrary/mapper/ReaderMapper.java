@@ -35,5 +35,4 @@ public class ReaderMapper {
                 .map(r -> new ReaderDto(r.getId(), r.getFirstname(), r.getLastname(), r.getSignUpDate()))
                 .collect(Collectors.toList());
     }
-
 }

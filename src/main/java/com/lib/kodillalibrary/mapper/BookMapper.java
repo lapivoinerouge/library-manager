@@ -35,10 +35,4 @@ public class BookMapper {
                 .map(b -> new BookDto(b.getId(), b.getBookTitle().getId(), b.getStatus()))
                 .collect(Collectors.toList());
     }
-
-//    public List<Book> mapToBookList(final List<BookDto> bookDtoList) {
-//        return bookDtoList.stream()
-//                .map(b -> new Book(b.getId(), titleMapper.mapToTitle(b.getBookTitle()), b.getStatus()))
-//                .collect(Collectors.toList());
-//    }
 }

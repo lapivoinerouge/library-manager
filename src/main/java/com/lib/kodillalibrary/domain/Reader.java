@@ -2,7 +2,6 @@ package com.lib.kodillalibrary.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -47,7 +46,7 @@ public class Reader {
     @OneToMany(
             targetEntity = LendStatus.class,
             mappedBy = "readerId",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
     @JsonManagedReference

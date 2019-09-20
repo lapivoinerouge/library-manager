@@ -2,7 +2,6 @@ package com.lib.kodillalibrary.mapper;
 
 import com.lib.kodillalibrary.domain.BookTitle;
 import com.lib.kodillalibrary.domain.BookTitleDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,10 +31,4 @@ public class TitleMapper {
                 .map(t -> new BookTitleDto(t.getId(), t.getTitle(), t.getAuthor(), t.getYear()))
                 .collect(Collectors.toList());
     }
-
-//    public List<BookTitleDto> mapToTitleDtoList(final List<BookTitle> titleList) {
-//        return titleList.stream()
-//                .map(t -> new BookTitleDto(t.getId(), t.getTitle(), t.getAuthor(), t.getYear(), bookMapper.mapToBookDtoList(t.getBooks())))
-//                .collect(Collectors.toList());
-//    }
 }

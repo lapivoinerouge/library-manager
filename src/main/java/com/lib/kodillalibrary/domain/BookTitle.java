@@ -42,9 +42,8 @@ public class BookTitle {
     @OneToMany(
             targetEntity = Book.class,
             mappedBy = "bookTitle",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
     private List<Book> books = new ArrayList<>();
-
 }

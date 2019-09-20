@@ -29,19 +29,25 @@ public class TitleController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteTitle")
-    public void deleteTitle(@RequestParam Long titleId) {
-        titleDbService.deleteTitle(titleId);
+    public void deleteTitle(@RequestParam Long titleId) throws NotFoundException {
+        try {
+            titleDbService.deleteTitle(titleId);
+        } catch (Exception e) {
+            throw new NotFoundException(titleId);
+        }
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "editTitle")
-    public BookTitleDto editTitle(@RequestBody BookTitleDto bookTitleDto) {
-        return titleMapper.mapToTitleDto(titleDbService.saveTitle(titleMapper.mapToTitle(bookTitleDto)));
+    public void editTitle(@RequestBody BookTitleDto bookTitleDto) throws NotFoundException {
+        if(titleDbService.getTitle(bookTitleDto.getId()).isPresent()) {
+            titleMapper.mapToTitleDto(titleDbService.saveTitle(titleMapper.mapToTitle(bookTitleDto)));
+        } else {
+            throw new NotFoundException(bookTitleDto.getId());
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "addTitle")
     public void addTitle(@RequestBody BookTitleDto bookTitleDto) {
         titleDbService.saveTitle(titleMapper.mapToTitle(bookTitleDto));
     }
-
-
 }

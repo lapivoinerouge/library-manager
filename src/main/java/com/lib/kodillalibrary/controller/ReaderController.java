@@ -29,20 +29,20 @@ public class ReaderController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteReader")
-    public void deleteReader(@RequestParam Long readerId) {
-        if(readerDbService.getReader(readerId).isPresent()) {
+    public void deleteReader(@RequestParam Long readerId) throws NotFoundException{
+        try {
             readerDbService.deleteReader(readerId);
-        } else {
-            new NotFoundException(readerId);
+        } catch (Exception e){
+            throw new NotFoundException(readerId);
         }
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "editReader")
-    public void editReader(@RequestBody ReaderDto readerDto) {
-        if(readerDbService.getReader(readerDto.getId()).isPresent()) {
+    public void editReader(@RequestBody ReaderDto readerDto) throws NotFoundException {
+        if (readerDbService.getReader(readerDto.getId()).isPresent()) {
             readerMapper.mapToReaderDto(readerDbService.saveReader(readerMapper.mapToReader(readerDto)));
         } else {
-            new NotFoundException(readerDto.getId());
+            throw new NotFoundException(readerDto.getId());
         }
     }
 
